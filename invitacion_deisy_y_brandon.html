@@ -41,85 +41,37 @@
             overflow-x: hidden;
         }
 
-        /* ===================== FASE 1: VIDEO ===================== */
-        .video-section {
+        /* ===================== FASE 1: SOBRE ===================== */
+        .envelope-section {
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 20px;
-            background: radial-gradient(ellipse at center, #1a1a2e 0%, #0d0d1a 100%);
-            position: relative;
+            padding: 40px 20px;
+            background: linear-gradient(to right, #FDF0F3 50%, #EBF5FB 50%);
+            cursor: pointer;
         }
 
-        .video-section h2 {
+        .envelope-section.hidden { display: none; }
+
+        .envelope-hint {
             font-family: 'Caveat', cursive;
-            color: #FFE699;
             font-size: 2rem;
-            margin-bottom: 15px;
+            color: var(--brown-bear);
+            margin-bottom: 25px;
             text-align: center;
             animation: fadeInDown 1s ease-out;
         }
-
-        .video-wrapper {
-            width: 100%;
-            max-width: 480px;
-            aspect-ratio: 9/16;
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: 0 0 40px rgba(255, 183, 197, 0.3), 0 0 40px rgba(162, 213, 242, 0.3);
-            animation: fadeInUp 1s ease-out 0.3s both;
-        }
-
-        .video-wrapper iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
-
-        /* Botón "Abrir invitación" */
-        .reveal-btn {
-            margin-top: 25px;
-            padding: 16px 35px;
-            font-family: 'Fredoka', sans-serif;
-            font-size: 1.2rem;
-            color: #FFF;
-            background: linear-gradient(135deg, var(--pink-dark), var(--blue-dark));
-            border: none;
-            border-radius: 50px;
-            cursor: pointer;
-            box-shadow: 0 8px 25px rgba(232, 90, 113, 0.4);
-            transition: all 0.3s;
-            display: none;
-            animation: pulseGlow 2s infinite;
-        }
-
-        .reveal-btn:hover { transform: scale(1.05); }
-        .reveal-btn.show { display: inline-block; animation: fadeInUp 0.8s ease-out, pulseGlow 2s infinite 0.8s; }
-
-        /* ===================== FASE 2: SOBRE ===================== */
-        .envelope-section {
-            min-height: 100vh;
-            display: none;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 40px 20px;
-            background: linear-gradient(to right, #FDF0F3 50%, #EBF5FB 50%);
-        }
-
-        .envelope-section.active { display: flex; }
 
         .envelope-container {
             position: relative;
             width: 300px;
             height: 200px;
-            margin-bottom: 0;
             perspective: 800px;
+            animation: fadeInUp 1s ease-out 0.3s both;
         }
 
-        /* Cuerpo del sobre */
         .envelope-body {
             width: 100%;
             height: 100%;
@@ -139,7 +91,6 @@
             font-size: 2.5rem;
         }
 
-        /* Solapa del sobre */
         .envelope-flap {
             width: 100%;
             height: 120px;
@@ -159,7 +110,6 @@
             z-index: 1;
         }
 
-        /* Tarjeta que sale del sobre */
         .envelope-card {
             position: absolute;
             bottom: 20px;
@@ -181,29 +131,32 @@
             opacity: 1;
         }
 
-        .envelope-card h3 {
-            font-family: 'Caveat', cursive;
-            color: var(--pink-dark);
-            font-size: 1.5rem;
-        }
+        .envelope-card h3 { font-family: 'Caveat', cursive; color: var(--pink-dark); font-size: 1.5rem; }
+        .envelope-card p { font-family: 'Fredoka', sans-serif; color: var(--brown-bear); font-size: 0.95rem; margin-top: 8px; }
 
-        .envelope-card p {
+        .tap-hint {
+            margin-top: 30px;
             font-family: 'Fredoka', sans-serif;
-            color: var(--brown-bear);
-            font-size: 0.95rem;
-            margin-top: 8px;
+            font-size: 1rem;
+            color: var(--blue-dark);
+            animation: pulseOpacity 2s infinite;
         }
 
-        /* ===================== FASE 3: INVITACIÓN ===================== */
-        .invitation-section {
+        @keyframes pulseOpacity {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+
+        /* ===================== FASE 2: INVITACIÓN + VIDEO ===================== */
+        .main-content {
             display: none;
-            justify-content: center;
+            flex-direction: column;
+            align-items: center;
             padding: 20px 10px 40px;
             background: linear-gradient(to right, #FDF0F3 50%, #EBF5FB 50%);
-            animation: fadeInUp 1s ease-out;
         }
 
-        .invitation-section.active { display: flex; }
+        .main-content.active { display: flex; }
 
         .card {
             background-color: var(--bg-warm);
@@ -217,6 +170,7 @@
             background-image: radial-gradient(#FFF1F3 2px, transparent 2px), radial-gradient(#F0F8FC 2px, transparent 2px);
             background-size: 30px 30px;
             background-position: 0 0, 15px 15px;
+            animation: fadeInUp 1s ease-out;
         }
 
         .header-title { margin-bottom: -5px; position: relative; z-index: 2; }
@@ -248,33 +202,47 @@
         .bet-boy { background-color: #EBF5FB; color: #1B4965; border-color: #A2D5F2; }
         .bet-girl { background-color: #FDF0F3; color: #800F2F; border-color: #FFB7C5; }
         .bet-idc { background-color: #FFF9E6; color: #705200; border-color: #FFE699; }
-
         .dynamic-diaper { background-color: #FFFFFF; color: #1B4965; padding: 3px 8px; border-radius: 12px; margin-top: 8px; font-size: 0.75rem !important; font-weight: 900 !important; border: 1px dashed #A2D5F2; display: inline-block; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
 
         .btn { font-family: 'Fredoka', sans-serif; text-decoration: none; padding: 12px 20px; border-radius: 50px; font-weight: 600; font-size: 0.95rem; display: flex; align-items: center; justify-content: center; gap: 8px; transition: transform 0.2s; }
         .btn:active { transform: scale(0.97); }
         .btn-map { background-color: #F4F4F4; color: var(--blue-dark); margin-top: 10px; border: 1px solid #D6E4ED; }
         .btn-wa { background-color: #25D366; color: #FFFFFF; box-shadow: 0 5px 15px rgba(37, 211, 102, 0.3); margin-top: 10px; }
-
         .closing-text { font-family: 'Caveat', cursive; font-size: 1.9rem; color: var(--brown-bear); margin: 20px 0 5px 0; font-weight: 700; }
+
+        /* ===================== SECCIÓN VIDEO ===================== */
+        .video-section {
+            width: 100%;
+            max-width: 440px;
+            margin-top: 30px;
+            text-align: center;
+            animation: fadeInUp 1s ease-out 0.5s both;
+        }
+
+        .video-title {
+            font-family: 'Caveat', cursive;
+            font-size: 1.8rem;
+            color: var(--brown-bear);
+            margin-bottom: 12px;
+        }
+
+        .video-wrapper {
+            width: 100%;
+            aspect-ratio: 9/16;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .video-wrapper iframe { width: 100%; height: 100%; border: none; }
 
         /* ===================== ANIMACIONES ===================== */
         @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes fadeInDown { from { opacity: 0; transform: translateY(-30px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes pulseGlow {
-            0%, 100% { box-shadow: 0 8px 25px rgba(232, 90, 113, 0.4); }
-            50% { box-shadow: 0 8px 40px rgba(232, 90, 113, 0.7), 0 0 20px rgba(162, 213, 242, 0.5); }
-        }
 
-        /* Partículas / confeti */
         .confetti-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 999; display: none; }
         .confetti-container.active { display: block; }
-        .confetti {
-            position: absolute;
-            width: 10px; height: 10px;
-            top: -10px;
-            animation: confettiFall 3s ease-in forwards;
-        }
+        .confetti { position: absolute; width: 10px; height: 10px; top: -10px; animation: confettiFall 3s ease-in forwards; }
         @keyframes confettiFall {
             0% { transform: translateY(0) rotate(0deg); opacity: 1; }
             100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
@@ -283,47 +251,31 @@
 </head>
 <body>
 
-    <!-- CONFETI -->
     <div class="confetti-container" id="confetti"></div>
 
-    <!-- ==================== FASE 1: VIDEO ==================== -->
-    <section class="video-section" id="videoSection">
-        <h2>✨ Tenemos un secreto que contarte... ✨</h2>
-        <div class="video-wrapper">
-            <iframe
-                id="ytPlayer"
-                src="https://www.youtube.com/embed/YxmGlfJC1XM?rel=0&modestbranding=1&enablejsapi=1"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowfullscreen>
-            </iframe>
-        </div>
-        <button class="reveal-btn" id="revealBtn" onclick="showEnvelope()">
-            💌 Abrir mi invitación
-        </button>
-    </section>
+    <!-- ==================== FASE 1: SOBRE ==================== -->
+    <section class="envelope-section" id="envelopeSection" onclick="openEnvelope()">
+        <div class="envelope-hint">🧸 ¡Tienes una invitación especial!</div>
 
-    <!-- ==================== FASE 2: SOBRE ==================== -->
-    <section class="envelope-section" id="envelopeSection">
         <div class="envelope-container" id="envelope">
-            <!-- Tarjeta dentro del sobre -->
             <div class="envelope-card">
                 <h3>🧸 ¡Sorpresa!</h3>
                 <p>Tu invitación está lista</p>
             </div>
-            <!-- Solapa -->
             <div class="envelope-flap">
                 <svg viewBox="0 0 300 120" preserveAspectRatio="none">
                     <path d="M0,0 L150,120 L300,0 Z" fill="#e8c9a0" stroke="#d4a574" stroke-width="1"/>
                     <path d="M0,0 L150,100 L300,0 Z" fill="#f0d5b0"/>
                 </svg>
             </div>
-            <!-- Cuerpo -->
             <div class="envelope-body"></div>
         </div>
+
+        <div class="tap-hint">👆 Toca para abrir tu invitación</div>
     </section>
 
-    <!-- ==================== FASE 3: INVITACIÓN ==================== -->
-    <section class="invitation-section" id="invitationSection">
+    <!-- ==================== FASE 2: INVITACIÓN + VIDEO ==================== -->
+    <section class="main-content" id="mainContent">
         <div class="card">
             <div class="header-title">
                 <span class="title-girl">Girl</span>
@@ -408,57 +360,40 @@
                 <div class="bet-card bet-idc"><strong>Indecis@</strong><span>Blanco<br>+ Kit de aseo</span></div>
             </div>
 
-            <a href="https://wa.me/573202139606?text=¡Hola!%20Soy%20Deisy & Brandon%20y%20confirmo%20mi%20asistencia%20a%20la%20revelación.%20¡Allá%20nos%20vemos!" target="_blank" class="btn btn-wa">💬 Confirmar por WhatsApp</a>
+            <a href="https://wa.me/573202139606?text=%C2%A1Hola%21%20Soy%20Tia%20Deisy%20%26%20Brandon%20y%20confirmo%20mi%20asistencia%20a%20la%20revelaci%C3%B3n%20de%20g%C3%A9nero.%20%C2%A1All%C3%A1%20nos%20vemos%21%20%F0%9F%A7%B8" target="_blank" class="btn btn-wa">💬 Confirmar por WhatsApp</a>
             <p class="closing-text">Con cariño, te esperamos 🧸</p>
+        </div>
+
+        <!-- VIDEO ABAJO -->
+        <div class="video-section">
+            <div class="video-title">🎬 Mira nuestro video especial</div>
+            <div class="video-wrapper">
+                <iframe
+                    src="https://www.youtube.com/embed/YxmGlfJC1XM?rel=0&modestbranding=1"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen>
+                </iframe>
+            </div>
         </div>
     </section>
 
     <script>
-        // YouTube API — detectar cuando termina el video
-        var tag = document.createElement('script');
-        tag.src = "https://www.youtube.com/iframe_api";
-        document.getElementsByTagName('script')[0].parentNode.insertBefore(tag, document.getElementsByTagName('script')[0]);
+        var opened = false;
 
-        var player;
-        function onYouTubeIframeAPIReady() {
-            player = new YT.Player('ytPlayer', {
-                events: {
-                    'onStateChange': function(event) {
-                        // Video terminó (state 0) o pausado (state 2) → mostrar botón
-                        if (event.data === YT.PlayerState.ENDED) {
-                            document.getElementById('revealBtn').classList.add('show');
-                        }
-                    },
-                    'onReady': function(event) {
-                        // Mostrar botón después de 5 segundos por si no quieren ver todo el video
-                        setTimeout(function() {
-                            document.getElementById('revealBtn').classList.add('show');
-                        }, 5000);
-                    }
-                }
-            });
-        }
+        function openEnvelope() {
+            if (opened) return;
+            opened = true;
 
-        // Mostrar sobre
-        function showEnvelope() {
-            document.getElementById('videoSection').style.display = 'none';
-            var envSection = document.getElementById('envelopeSection');
-            envSection.classList.add('active');
+            document.getElementById('envelope').classList.add('open');
+            document.querySelector('.tap-hint').style.display = 'none';
 
-            // Abrir sobre después de 0.8s
             setTimeout(function() {
-                document.getElementById('envelope').classList.add('open');
-            }, 800);
-
-            // Mostrar invitación + confeti después de 3.5s
-            setTimeout(function() {
-                envSection.style.display = 'none';
-                document.getElementById('invitationSection').classList.add('active');
+                document.getElementById('envelopeSection').classList.add('hidden');
+                document.getElementById('mainContent').classList.add('active');
                 launchConfetti();
-            }, 3500);
+            }, 3000);
         }
 
-        // Confeti
         function launchConfetti() {
             var container = document.getElementById('confetti');
             container.classList.add('active');
