@@ -11,9 +11,7 @@
     <meta property="og:description" content="Acompáñanos este Sábado 10 de Octubre. Toca aquí para ver tu invitación.">
     <meta property="og:image" content="https://onix2pac.github.io/revelacion/preview.png">
     <meta property="og:image:width" content="1200">
-    <meta property="og:image:height" content="596">
-
-    <!-- TWITTER CARDS -->
+    <meta property="og:image:height" content="630">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="¡Hola Giovany, Xiomara e hija! 🧸 Revelación de Género">
     <meta name="twitter:description" content="Acompáñanos este Sábado 10 de Octubre. Toca aquí para ver tu invitación.">
@@ -21,7 +19,7 @@
 
     <title>¡Revelación de Género!</title>
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Fredoka:wght@400;600;700&family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
-    
+
     <style>
         :root {
             --bg-warm: #FFFFFF;
@@ -34,17 +32,178 @@
             --text-main: #5C4033;
         }
 
-        /* FONDO DIVIDIDO ROSA Y AZUL SUAVE */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
         body {
-            background: linear-gradient(to right, #FDF0F3 50%, #EBF5FB 50%);
             font-family: 'Nunito', sans-serif;
-            margin: 0;
-            padding: 20px 10px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            background: linear-gradient(to right, #FDF0F3 50%, #EBF5FB 50%);
             min-height: 100vh;
+            overflow-x: hidden;
         }
+
+        /* ===================== FASE 1: VIDEO ===================== */
+        .video-section {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            background: radial-gradient(ellipse at center, #1a1a2e 0%, #0d0d1a 100%);
+            position: relative;
+        }
+
+        .video-section h2 {
+            font-family: 'Caveat', cursive;
+            color: #FFE699;
+            font-size: 2rem;
+            margin-bottom: 15px;
+            text-align: center;
+            animation: fadeInDown 1s ease-out;
+        }
+
+        .video-wrapper {
+            width: 100%;
+            max-width: 480px;
+            aspect-ratio: 9/16;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 0 40px rgba(255, 183, 197, 0.3), 0 0 40px rgba(162, 213, 242, 0.3);
+            animation: fadeInUp 1s ease-out 0.3s both;
+        }
+
+        .video-wrapper iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        /* Botón "Abrir invitación" */
+        .reveal-btn {
+            margin-top: 25px;
+            padding: 16px 35px;
+            font-family: 'Fredoka', sans-serif;
+            font-size: 1.2rem;
+            color: #FFF;
+            background: linear-gradient(135deg, var(--pink-dark), var(--blue-dark));
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 8px 25px rgba(232, 90, 113, 0.4);
+            transition: all 0.3s;
+            display: none;
+            animation: pulseGlow 2s infinite;
+        }
+
+        .reveal-btn:hover { transform: scale(1.05); }
+        .reveal-btn.show { display: inline-block; animation: fadeInUp 0.8s ease-out, pulseGlow 2s infinite 0.8s; }
+
+        /* ===================== FASE 2: SOBRE ===================== */
+        .envelope-section {
+            min-height: 100vh;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+            background: linear-gradient(to right, #FDF0F3 50%, #EBF5FB 50%);
+        }
+
+        .envelope-section.active { display: flex; }
+
+        .envelope-container {
+            position: relative;
+            width: 300px;
+            height: 200px;
+            margin-bottom: 0;
+            perspective: 800px;
+        }
+
+        /* Cuerpo del sobre */
+        .envelope-body {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #f8e8d0, #f5d5b8);
+            border-radius: 0 0 10px 10px;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            z-index: 2;
+        }
+
+        .envelope-body::before {
+            content: '💌';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 2.5rem;
+        }
+
+        /* Solapa del sobre */
+        .envelope-flap {
+            width: 100%;
+            height: 120px;
+            position: absolute;
+            top: -1px;
+            left: 0;
+            z-index: 3;
+            transform-origin: top center;
+            transform: rotateX(0deg);
+            transition: transform 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .envelope-flap svg { width: 100%; height: 100%; }
+
+        .envelope-container.open .envelope-flap {
+            transform: rotateX(180deg);
+            z-index: 1;
+        }
+
+        /* Tarjeta que sale del sobre */
+        .envelope-card {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%) translateY(0);
+            width: 250px;
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            z-index: 1;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: transform 1.5s cubic-bezier(0.4, 0, 0.2, 1) 0.8s, opacity 0.5s ease 0.8s;
+            opacity: 0;
+        }
+
+        .envelope-container.open .envelope-card {
+            transform: translateX(-50%) translateY(-260px);
+            opacity: 1;
+        }
+
+        .envelope-card h3 {
+            font-family: 'Caveat', cursive;
+            color: var(--pink-dark);
+            font-size: 1.5rem;
+        }
+
+        .envelope-card p {
+            font-family: 'Fredoka', sans-serif;
+            color: var(--brown-bear);
+            font-size: 0.95rem;
+            margin-top: 8px;
+        }
+
+        /* ===================== FASE 3: INVITACIÓN ===================== */
+        .invitation-section {
+            display: none;
+            justify-content: center;
+            padding: 20px 10px 40px;
+            background: linear-gradient(to right, #FDF0F3 50%, #EBF5FB 50%);
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .invitation-section.active { display: flex; }
 
         .card {
             background-color: var(--bg-warm);
@@ -53,7 +212,6 @@
             border-radius: 30px;
             box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08);
             padding: 30px 20px 25px;
-            box-sizing: border-box;
             text-align: center;
             position: relative;
             background-image: radial-gradient(#FFF1F3 2px, transparent 2px), radial-gradient(#F0F8FC 2px, transparent 2px);
@@ -61,365 +219,266 @@
             background-position: 0 0, 15px 15px;
         }
 
-        /* ENCABEZADO "GIRL OR BOY" */
-        .header-title {
-            margin-bottom: -5px;
-            position: relative;
-            z-index: 2;
-        }
-        .title-girl {
-            font-family: 'Caveat', cursive;
-            font-size: 4.5rem;
-            color: var(--pink-dark);
-            line-height: 0.7;
-            display: inline-block;
-            margin-right: 15px;
-            transform: rotate(-5deg);
-        }
-        .title-or {
-            font-family: 'Caveat', cursive;
-            font-size: 2.2rem;
-            color: var(--brown-bear);
-            display: inline-block;
-        }
-        .title-boy {
-            font-family: 'Caveat', cursive;
-            font-size: 4.5rem;
-            color: var(--blue-dark);
-            line-height: 0.7;
-            display: inline-block;
-            margin-left: 15px;
-            transform: rotate(5deg);
-        }
+        .header-title { margin-bottom: -5px; position: relative; z-index: 2; }
+        .title-girl { font-family: 'Caveat', cursive; font-size: 4.5rem; color: var(--pink-dark); line-height: 0.7; display: inline-block; margin-right: 15px; transform: rotate(-5deg); }
+        .title-or { font-family: 'Caveat', cursive; font-size: 2.2rem; color: var(--brown-bear); display: inline-block; }
+        .title-boy { font-family: 'Caveat', cursive; font-size: 4.5rem; color: var(--blue-dark); line-height: 0.7; display: inline-block; margin-left: 15px; transform: rotate(5deg); }
 
-        /* ILUSTRACIÓN DE OSITOS */
-        .illustration-container {
-            width: 100%;
-            max-width: 360px;
-            margin: 5px auto 10px;
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-end;
-            position: relative;
-            z-index: 1;
-        }
-        .bear-svg {
-            width: 48%;
-            height: auto;
-            filter: drop-shadow(0px 8px 10px rgba(0,0,0,0.08));
-        }
+        .illustration-container { width: 100%; max-width: 360px; margin: 5px auto 10px; display: flex; justify-content: space-between; align-items: flex-end; position: relative; z-index: 1; }
+        .bear-svg { width: 48%; height: auto; filter: drop-shadow(0px 8px 10px rgba(0,0,0,0.08)); }
 
-        /* TARJETA DEL INVITADO */
-        .guest-box {
-            margin-bottom: 5px;
-            padding: 10px;
-        }
-        .guest-name {
-            font-family: 'Fredoka', sans-serif;
-            font-size: 1.6rem;
-            color: var(--brown-bear);
-            margin: 0;
-            text-transform: capitalize;
-        }
+        .guest-box { margin-bottom: 5px; padding: 10px; }
+        .guest-name { font-family: 'Fredoka', sans-serif; font-size: 1.6rem; color: var(--brown-bear); margin: 0; text-transform: capitalize; }
 
-        /* SECCIÓN DE FECHA */
-        .date-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin: 15px 0 20px;
-        }
-        .date-side {
-            width: 85px;
-            padding: 8px 0;
-            font-family: 'Fredoka', sans-serif;
-            font-size: 1.1rem;
-            font-weight: 600;
-        }
-        .date-side.left {
-            color: var(--pink-dark);
-            border-top: 2px solid var(--pink-soft);
-            border-bottom: 2px solid var(--pink-soft);
-        }
-        .date-side.right {
-            color: var(--blue-dark);
-            border-top: 2px solid var(--blue-soft);
-            border-bottom: 2px solid var(--blue-soft);
-        }
-        .date-center {
-            margin: 0 10px;
-            padding: 0 15px;
-            border-left: 2px dotted #DDD;
-            border-right: 2px dotted #DDD;
-        }
-        .date-center .month {
-            font-size: 1rem;
-            color: var(--brown-bear);
-            font-weight: 700;
-        }
-        .date-center .day {
-            font-family: 'Fredoka', sans-serif;
-            font-size: 3.5rem;
-            color: var(--pink-dark);
-            line-height: 0.9;
-            font-weight: 700;
-        }
+        .date-container { display: flex; justify-content: center; align-items: center; margin: 15px 0 20px; }
+        .date-side { width: 85px; padding: 8px 0; font-family: 'Fredoka', sans-serif; font-size: 1.1rem; font-weight: 600; }
+        .date-side.left { color: var(--pink-dark); border-top: 2px solid var(--pink-soft); border-bottom: 2px solid var(--pink-soft); }
+        .date-side.right { color: var(--blue-dark); border-top: 2px solid var(--blue-soft); border-bottom: 2px solid var(--blue-soft); }
+        .date-center { margin: 0 10px; padding: 0 15px; border-left: 2px dotted #DDD; border-right: 2px dotted #DDD; }
+        .date-center .month { font-size: 1rem; color: var(--brown-bear); font-weight: 700; }
+        .date-center .day { font-family: 'Fredoka', sans-serif; font-size: 3.5rem; color: var(--pink-dark); line-height: 0.9; font-weight: 700; }
 
-        /* UBICACIÓN */
-        .location-info {
-            font-size: 0.95rem;
-            color: var(--text-main);
-            margin-bottom: 25px;
-            font-weight: 700;
-        }
+        .location-info { font-size: 0.95rem; color: var(--text-main); margin-bottom: 25px; font-weight: 700; }
 
-        /* TARJETAS DE APUESTA */
-        .bets-title {
-            font-family: 'Fredoka', sans-serif;
-            color: var(--brown-bear);
-            font-size: 1.2rem;
-            margin-bottom: 15px;
-        }
-        .bets-grid {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 25px;
-        }
-        .bet-card {
-            flex: 1;
-            border-radius: 20px;
-            padding: 15px 5px;
-            text-align: center;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.04);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            border: 2px solid transparent;
-        }
-        .bet-card strong {
-            display: block;
-            font-family: 'Fredoka', sans-serif;
-            font-size: 1.1rem;
-            margin-bottom: 6px;
-        }
-        .bet-card span {
-            font-size: 0.75rem;
-            font-weight: 700;
-            display: block;
-            line-height: 1.3;
-        }
-
+        .bets-title { font-family: 'Fredoka', sans-serif; color: var(--brown-bear); font-size: 1.2rem; margin-bottom: 15px; }
+        .bets-grid { display: flex; gap: 10px; margin-bottom: 25px; }
+        .bet-card { flex: 1; border-radius: 20px; padding: 15px 5px; text-align: center; box-shadow: 0 4px 10px rgba(0,0,0,0.04); display: flex; flex-direction: column; justify-content: center; align-items: center; border: 2px solid transparent; }
+        .bet-card strong { display: block; font-family: 'Fredoka', sans-serif; font-size: 1.1rem; margin-bottom: 6px; }
+        .bet-card span { font-size: 0.75rem; font-weight: 700; display: block; line-height: 1.3; }
         .bet-boy { background-color: #EBF5FB; color: #1B4965; border-color: #A2D5F2; }
         .bet-girl { background-color: #FDF0F3; color: #800F2F; border-color: #FFB7C5; }
         .bet-idc { background-color: #FFF9E6; color: #705200; border-color: #FFE699; }
 
-        .dynamic-diaper {
-            background-color: #FFFFFF;
-            color: #1B4965;
-            padding: 3px 8px;
-            border-radius: 12px;
-            margin-top: 8px;
-            font-size: 0.75rem !important;
-            font-weight: 900 !important;
-            border: 1px dashed #A2D5F2;
-            display: inline-block;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-        }
+        .dynamic-diaper { background-color: #FFFFFF; color: #1B4965; padding: 3px 8px; border-radius: 12px; margin-top: 8px; font-size: 0.75rem !important; font-weight: 900 !important; border: 1px dashed #A2D5F2; display: inline-block; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
 
-        /* BOTONES INTERACTIVOS */
-        .btn {
-            font-family: 'Fredoka', sans-serif;
-            text-decoration: none;
-            padding: 12px 20px;
-            border-radius: 50px;
-            font-weight: 600;
-            font-size: 0.95rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            transition: transform 0.2s;
-        }
+        .btn { font-family: 'Fredoka', sans-serif; text-decoration: none; padding: 12px 20px; border-radius: 50px; font-weight: 600; font-size: 0.95rem; display: flex; align-items: center; justify-content: center; gap: 8px; transition: transform 0.2s; }
         .btn:active { transform: scale(0.97); }
-        
-        .btn-map { 
-            background-color: #F4F4F4; 
-            color: var(--blue-dark); 
-            margin-top: 10px;
-            border: 1px solid #D6E4ED;
-        }
-        
-        .btn-wa { 
-            background-color: #25D366; 
-            color: #FFFFFF; 
-            box-shadow: 0 5px 15px rgba(37, 211, 102, 0.3);
-            margin-top: 10px;
+        .btn-map { background-color: #F4F4F4; color: var(--blue-dark); margin-top: 10px; border: 1px solid #D6E4ED; }
+        .btn-wa { background-color: #25D366; color: #FFFFFF; box-shadow: 0 5px 15px rgba(37, 211, 102, 0.3); margin-top: 10px; }
+
+        .closing-text { font-family: 'Caveat', cursive; font-size: 1.9rem; color: var(--brown-bear); margin: 20px 0 5px 0; font-weight: 700; }
+
+        /* ===================== ANIMACIONES ===================== */
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeInDown { from { opacity: 0; transform: translateY(-30px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes pulseGlow {
+            0%, 100% { box-shadow: 0 8px 25px rgba(232, 90, 113, 0.4); }
+            50% { box-shadow: 0 8px 40px rgba(232, 90, 113, 0.7), 0 0 20px rgba(162, 213, 242, 0.5); }
         }
 
-        /* MENSAJE FINAL */
-        .closing-text {
-            font-family: 'Caveat', cursive;
-            font-size: 1.9rem;
-            color: var(--brown-bear);
-            margin: 20px 0 5px 0;
-            font-weight: 700;
+        /* Partículas / confeti */
+        .confetti-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 999; display: none; }
+        .confetti-container.active { display: block; }
+        .confetti {
+            position: absolute;
+            width: 10px; height: 10px;
+            top: -10px;
+            animation: confettiFall 3s ease-in forwards;
         }
-
+        @keyframes confettiFall {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+        }
     </style>
 </head>
 <body>
 
-    <div class="card">
-        
-        <!-- ENCABEZADO "GIRL OR BOY" -->
-        <div class="header-title">
-            <span class="title-girl">Girl</span>
-            <span class="title-or">or</span>
-            <span class="title-boy">Boy</span>
+    <!-- CONFETI -->
+    <div class="confetti-container" id="confetti"></div>
+
+    <!-- ==================== FASE 1: VIDEO ==================== -->
+    <section class="video-section" id="videoSection">
+        <h2>✨ Tenemos un secreto que contarte... ✨</h2>
+        <div class="video-wrapper">
+            <iframe
+                id="ytPlayer"
+                src="https://www.youtube.com/embed/YxmGlfJC1XM?rel=0&modestbranding=1&enablejsapi=1"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen>
+            </iframe>
         </div>
+        <button class="reveal-btn" id="revealBtn" onclick="showEnvelope()">
+            💌 Abrir mi invitación
+        </button>
+    </section>
 
-        <!-- ILUSTRACIÓN DE OSITOS -->
-        <div class="illustration-container">
-            <!-- OSITA ROSA -->
-            <svg class="bear-svg" viewBox="0 0 160 230" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M55 85 Q 75 125 80 155" stroke="#C9B09C" stroke-width="1.2" fill="none" stroke-linecap="round"/>
-                <path d="M85 75 Q 85 120 80 155" stroke="#C9B09C" stroke-width="1.2" fill="none" stroke-linecap="round"/>
-                <path d="M110 90 Q 90 130 80 155" stroke="#C9B09C" stroke-width="1.2" fill="none" stroke-linecap="round"/>
-                
-                <circle cx="55" cy="55" r="28" fill="#FFB7C5"/>
-                <ellipse cx="45" cy="45" rx="7" ry="11" fill="#FFFFFF" opacity="0.5" transform="rotate(-30 45 45)"/>
-                <circle cx="95" cy="45" r="26" fill="#FF8EA3"/>
-                <ellipse cx="86" cy="36" rx="6" ry="10" fill="#FFFFFF" opacity="0.5" transform="rotate(-30 86 36)"/>
-                <circle cx="75" cy="80" r="22" fill="#FAD4D8"/>
-                <ellipse cx="68" cy="72" rx="5" ry="8" fill="#FFFFFF" opacity="0.5" transform="rotate(-30 68 72)"/>
-
-                <g transform="translate(0, 20)">
-                    <circle cx="58" cy="135" r="14" fill="#A87B60"/>
-                    <circle cx="58" cy="135" r="8" fill="#F4D3BA"/>
-                    <circle cx="102" cy="135" r="14" fill="#A87B60"/>
-                    <circle cx="102" cy="135" r="8" fill="#F4D3BA"/>
-                    
-                    <ellipse cx="80" cy="155" rx="34" ry="29" fill="#A87B60"/>
-                    
-                    <circle cx="58" cy="162" r="7" fill="#FFB7C5" opacity="0.7"/>
-                    <circle cx="102" cy="162" r="7" fill="#FFB7C5" opacity="0.7"/>
-                    
-                    <ellipse cx="80" cy="166" rx="16" ry="11" fill="#F4D3BA"/>
-                    <path d="M74 165 Q 77 169 80 165 Q 83 169 86 165" stroke="#4A3320" stroke-width="1.8" stroke-linecap="round" fill="none"/>
-                    <ellipse cx="80" cy="160" rx="4.5" ry="3" fill="#4A3320"/>
-                    
-                    <circle cx="66" cy="152" r="4.5" fill="#4A3320"/>
-                    <circle cx="67.5" cy="150.5" r="1.5" fill="#FFFFFF"/>
-                    <circle cx="94" cy="152" r="4.5" fill="#4A3320"/>
-                    <circle cx="95.5" cy="150.5" r="1.5" fill="#FFFFFF"/>
-
-                    <path d="M55 180 Q 80 170 105 180 L118 215 Q 80 220 42 215 Z" fill="#FFB7C5"/>
-                    <path d="M42 215 Q 52 220 62 213 Q 72 220 80 213 Q 88 220 98 213 Q 108 220 118 215" fill="none" stroke="#FF8EA3" stroke-width="2.5"/>
-                    
-                    <path d="M40 120 Q 52 130 65 120 Q 52 110 40 120 Z" fill="#E85A71"/>
-                    <circle cx="52.5" cy="120" r="3.5" fill="#FFE699"/>
-                </g>
-            </svg>
-
-            <!-- OSITO AZUL -->
-            <svg class="bear-svg" viewBox="0 0 160 230" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M50 90 Q 70 130 80 155" stroke="#C9B09C" stroke-width="1.2" fill="none" stroke-linecap="round"/>
-                <path d="M75 75 Q 75 120 80 155" stroke="#C9B09C" stroke-width="1.2" fill="none" stroke-linecap="round"/>
-                <path d="M105 85 Q 85 125 80 155" stroke="#C9B09C" stroke-width="1.2" fill="none" stroke-linecap="round"/>
-                
-                <circle cx="105" cy="55" r="28" fill="#A2D5F2"/>
-                <ellipse cx="95" cy="45" rx="7" ry="11" fill="#FFFFFF" opacity="0.5" transform="rotate(-30 95 45)"/>
-                <circle cx="65" cy="45" r="26" fill="#78BBE6"/>
-                <ellipse cx="56" cy="36" rx="6" ry="10" fill="#FFFFFF" opacity="0.5" transform="rotate(-30 56 36)"/>
-                <circle cx="85" cy="80" r="22" fill="#CDE7F7"/>
-                <ellipse cx="78" cy="72" rx="5" ry="8" fill="#FFFFFF" opacity="0.5" transform="rotate(-30 78 72)"/>
-
-                <g transform="translate(0, 20)">
-                    <circle cx="58" cy="135" r="14" fill="#A87B60"/>
-                    <circle cx="58" cy="135" r="8" fill="#F4D3BA"/>
-                    <circle cx="102" cy="135" r="14" fill="#A87B60"/>
-                    <circle cx="102" cy="135" r="8" fill="#F4D3BA"/>
-                    
-                    <ellipse cx="80" cy="155" rx="34" ry="29" fill="#A87B60"/>
-                    
-                    <circle cx="58" cy="162" r="7" fill="#F4A261" opacity="0.4"/>
-                    <circle cx="102" cy="162" r="7" fill="#F4A261" opacity="0.4"/>
-                    
-                    <ellipse cx="80" cy="166" rx="16" ry="11" fill="#F4D3BA"/>
-                    <path d="M74 165 Q 77 169 80 165 Q 83 169 86 165" stroke="#4A3320" stroke-width="1.8" stroke-linecap="round" fill="none"/>
-                    <ellipse cx="80" cy="160" rx="4.5" ry="3" fill="#4A3320"/>
-                    
-                    <circle cx="66" cy="152" r="4.5" fill="#4A3320"/>
-                    <circle cx="67.5" cy="150.5" r="1.5" fill="#FFFFFF"/>
-                    <circle cx="94" cy="152" r="4.5" fill="#4A3320"/>
-                    <circle cx="95.5" cy="150.5" r="1.5" fill="#FFFFFF"/>
-
-                    <path d="M58 180 L102 180 L95 215 L65 215 Z" fill="#A2D5F2"/>
-                    <path d="M65 180 L65 215" stroke="#78BBE6" stroke-width="2.5" stroke-dasharray="4,3"/>
-                    <path d="M95 180 L95 215" stroke="#78BBE6" stroke-width="2.5" stroke-dasharray="4,3"/>
-                    
-                    <path d="M70 173 L90 173 L80 182 Z" fill="#457B9D"/>
-                    <circle cx="80" cy="177" r="2.5" fill="#FFE699"/>
-                </g>
-            </svg>
-        </div>
-
-        <!-- TARJETA INVITADO -->
-        <div class="guest-box">
-            <h3 class="guest-name">¡Hola, Giovany, Xiomara e hija!</h3>
-        </div>
-
-        <!-- FECHA -->
-        <div class="date-container">
-            <div class="date-side left">Sábado</div>
-            <div class="date-center">
-                <div class="month">Octubre</div>
-                <div class="day">10</div>
+    <!-- ==================== FASE 2: SOBRE ==================== -->
+    <section class="envelope-section" id="envelopeSection">
+        <div class="envelope-container" id="envelope">
+            <!-- Tarjeta dentro del sobre -->
+            <div class="envelope-card">
+                <h3>🧸 ¡Sorpresa!</h3>
+                <p>Tu invitación está lista</p>
             </div>
-            <div class="date-side right">4:00 pm</div>
+            <!-- Solapa -->
+            <div class="envelope-flap">
+                <svg viewBox="0 0 300 120" preserveAspectRatio="none">
+                    <path d="M0,0 L150,120 L300,0 Z" fill="#e8c9a0" stroke="#d4a574" stroke-width="1"/>
+                    <path d="M0,0 L150,100 L300,0 Z" fill="#f0d5b0"/>
+                </svg>
+            </div>
+            <!-- Cuerpo -->
+            <div class="envelope-body"></div>
         </div>
+    </section>
 
-        <!-- UBICACIÓN + BOTÓN MAPA REUBICADO -->
-        <div class="location-info">
-            📍 <strong>Carrera 82 H 62 55 sur</strong><br>
-            Bosa la paz
-            
-            <a href="https://www.google.com/maps/search/?api=1&query=carrera+82+H+62+55+sur" target="_blank" class="btn btn-map">
-                🗺️ Ver en Google Maps
-            </a>
-        </div>
-
-        <!-- APUESTAS -->
-        <div class="bets-title">Viste según tu apuesta</div>
-        <div class="bets-grid">
-            <div class="bet-card bet-boy">
-                <strong>Niño</strong>
-                <span>Prenda Azul</span>
-                <span class="dynamic-diaper">+ Pañales E0</span>
+    <!-- ==================== FASE 3: INVITACIÓN ==================== -->
+    <section class="invitation-section" id="invitationSection">
+        <div class="card">
+            <div class="header-title">
+                <span class="title-girl">Girl</span>
+                <span class="title-or">or</span>
+                <span class="title-boy">Boy</span>
             </div>
 
-            <div class="bet-card bet-girl">
-                <strong>Niña</strong>
-                <span>Prenda Rosa<br>+ Pañitos</span>
+            <div class="illustration-container">
+                <svg class="bear-svg" viewBox="0 0 160 230" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M55 85 Q 75 125 80 155" stroke="#C9B09C" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+                    <path d="M85 75 Q 85 120 80 155" stroke="#C9B09C" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+                    <path d="M110 90 Q 90 130 80 155" stroke="#C9B09C" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+                    <circle cx="55" cy="55" r="28" fill="#FFB7C5"/><ellipse cx="45" cy="45" rx="7" ry="11" fill="#FFFFFF" opacity="0.5" transform="rotate(-30 45 45)"/>
+                    <circle cx="95" cy="45" r="26" fill="#FF8EA3"/><ellipse cx="86" cy="36" rx="6" ry="10" fill="#FFFFFF" opacity="0.5" transform="rotate(-30 86 36)"/>
+                    <circle cx="75" cy="80" r="22" fill="#FAD4D8"/><ellipse cx="68" cy="72" rx="5" ry="8" fill="#FFFFFF" opacity="0.5" transform="rotate(-30 68 72)"/>
+                    <g transform="translate(0, 20)">
+                        <circle cx="58" cy="135" r="14" fill="#A87B60"/><circle cx="58" cy="135" r="8" fill="#F4D3BA"/>
+                        <circle cx="102" cy="135" r="14" fill="#A87B60"/><circle cx="102" cy="135" r="8" fill="#F4D3BA"/>
+                        <ellipse cx="80" cy="155" rx="34" ry="29" fill="#A87B60"/>
+                        <circle cx="58" cy="162" r="7" fill="#FFB7C5" opacity="0.7"/>
+                        <circle cx="102" cy="162" r="7" fill="#FFB7C5" opacity="0.7"/>
+                        <ellipse cx="80" cy="166" rx="16" ry="11" fill="#F4D3BA"/>
+                        <path d="M74 165 Q 77 169 80 165 Q 83 169 86 165" stroke="#4A3320" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+                        <ellipse cx="80" cy="160" rx="4.5" ry="3" fill="#4A3320"/>
+                        <circle cx="66" cy="152" r="4.5" fill="#4A3320"/><circle cx="67.5" cy="150.5" r="1.5" fill="#FFFFFF"/>
+                        <circle cx="94" cy="152" r="4.5" fill="#4A3320"/><circle cx="95.5" cy="150.5" r="1.5" fill="#FFFFFF"/>
+                        <path d="M55 180 Q 80 170 105 180 L118 215 Q 80 220 42 215 Z" fill="#FFB7C5"/>
+                        <path d="M42 215 Q 52 220 62 213 Q 72 220 80 213 Q 88 220 98 213 Q 108 220 118 215" fill="none" stroke="#FF8EA3" stroke-width="2.5"/>
+                        <path d="M40 120 Q 52 130 65 120 Q 52 110 40 120 Z" fill="#E85A71"/>
+                        <circle cx="52.5" cy="120" r="3.5" fill="#FFE699"/>
+                    </g>
+                </svg>
+                <svg class="bear-svg" viewBox="0 0 160 230" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M50 90 Q 70 130 80 155" stroke="#C9B09C" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+                    <path d="M75 75 Q 75 120 80 155" stroke="#C9B09C" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+                    <path d="M105 85 Q 85 125 80 155" stroke="#C9B09C" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+                    <circle cx="105" cy="55" r="28" fill="#A2D5F2"/><ellipse cx="95" cy="45" rx="7" ry="11" fill="#FFFFFF" opacity="0.5" transform="rotate(-30 95 45)"/>
+                    <circle cx="65" cy="45" r="26" fill="#78BBE6"/><ellipse cx="56" cy="36" rx="6" ry="10" fill="#FFFFFF" opacity="0.5" transform="rotate(-30 56 36)"/>
+                    <circle cx="85" cy="80" r="22" fill="#CDE7F7"/><ellipse cx="78" cy="72" rx="5" ry="8" fill="#FFFFFF" opacity="0.5" transform="rotate(-30 78 72)"/>
+                    <g transform="translate(0, 20)">
+                        <circle cx="58" cy="135" r="14" fill="#A87B60"/><circle cx="58" cy="135" r="8" fill="#F4D3BA"/>
+                        <circle cx="102" cy="135" r="14" fill="#A87B60"/><circle cx="102" cy="135" r="8" fill="#F4D3BA"/>
+                        <ellipse cx="80" cy="155" rx="34" ry="29" fill="#A87B60"/>
+                        <circle cx="58" cy="162" r="7" fill="#F4A261" opacity="0.4"/>
+                        <circle cx="102" cy="162" r="7" fill="#F4A261" opacity="0.4"/>
+                        <ellipse cx="80" cy="166" rx="16" ry="11" fill="#F4D3BA"/>
+                        <path d="M74 165 Q 77 169 80 165 Q 83 169 86 165" stroke="#4A3320" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+                        <ellipse cx="80" cy="160" rx="4.5" ry="3" fill="#4A3320"/>
+                        <circle cx="66" cy="152" r="4.5" fill="#4A3320"/><circle cx="67.5" cy="150.5" r="1.5" fill="#FFFFFF"/>
+                        <circle cx="94" cy="152" r="4.5" fill="#4A3320"/><circle cx="95.5" cy="150.5" r="1.5" fill="#FFFFFF"/>
+                        <path d="M58 180 L102 180 L95 215 L65 215 Z" fill="#A2D5F2"/>
+                        <path d="M65 180 L65 215" stroke="#78BBE6" stroke-width="2.5" stroke-dasharray="4,3"/>
+                        <path d="M95 180 L95 215" stroke="#78BBE6" stroke-width="2.5" stroke-dasharray="4,3"/>
+                        <path d="M70 173 L90 173 L80 182 Z" fill="#457B9D"/>
+                        <circle cx="80" cy="177" r="2.5" fill="#FFE699"/>
+                    </g>
+                </svg>
             </div>
-            
-            <div class="bet-card bet-idc">
-                <strong>Indecis@</strong>
-                <span>Blanco<br>+ Kit de aseo</span>
+
+            <div class="guest-box">
+                <h3 class="guest-name">¡Hola, Giovany, Xiomara e hija!</h3>
             </div>
+
+            <div class="date-container">
+                <div class="date-side left">Sábado</div>
+                <div class="date-center">
+                    <div class="month">Octubre</div>
+                    <div class="day">10</div>
+                </div>
+                <div class="date-side right">4:00 pm</div>
+            </div>
+
+            <div class="location-info">
+                📍 <strong>Carrera 82 H 62 55 sur</strong><br>Bosa la paz
+                <a href="https://www.google.com/maps/search/?api=1&query=carrera+82+H+62+55+sur" target="_blank" class="btn btn-map">🗺️ Ver en Google Maps</a>
+            </div>
+
+            <div class="bets-title">Viste según tu apuesta</div>
+            <div class="bets-grid">
+                <div class="bet-card bet-boy"><strong>Niño</strong><span>Prenda Azul</span><span class="dynamic-diaper">+ Pañales E0</span></div>
+                <div class="bet-card bet-girl"><strong>Niña</strong><span>Prenda Rosa<br>+ Pañitos</span></div>
+                <div class="bet-card bet-idc"><strong>Indecis@</strong><span>Blanco<br>+ Kit de aseo</span></div>
+            </div>
+
+            <a href="https://wa.me/573202139606?text=¡Hola!%20Soy%20Giovany, Xiomara e hija%20y%20confirmo%20mi%20asistencia%20a%20la%20revelación.%20¡Allá%20nos%20vemos!" target="_blank" class="btn btn-wa">💬 Confirmar por WhatsApp</a>
+            <p class="closing-text">Con cariño, te esperamos 🧸</p>
         </div>
+    </section>
 
-        <!-- BOTÓN WHATSAPP -->
-        <!-- RECUERDA CAMBIAR EL NÚMERO DE TELÉFONO AQUÍ ABAJO -->
-        <a href="https://wa.me/573202139606?text=%C2%A1Hola%21%20Soy%20Giovany%2C%20Xiomara%20e%20hija%20y%20confirmo%20mi%20asistencia%20a%20la%20revelaci%C3%B3n.%20%C2%A1All%C3%A1%20nos%20vemos%21" target="_blank" class="btn btn-wa">
-            💬 Confirmar por WhatsApp
-        </a>
+    <script>
+        // YouTube API — detectar cuando termina el video
+        var tag = document.createElement('script');
+        tag.src = "https://www.youtube.com/iframe_api";
+        document.getElementsByTagName('script')[0].parentNode.insertBefore(tag, document.getElementsByTagName('script')[0]);
 
-        <!-- MENSAJE FINAL -->
-        <p class="closing-text">Con cariño, te esperamos 🧸</p>
+        var player;
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('ytPlayer', {
+                events: {
+                    'onStateChange': function(event) {
+                        // Video terminó (state 0) o pausado (state 2) → mostrar botón
+                        if (event.data === YT.PlayerState.ENDED) {
+                            document.getElementById('revealBtn').classList.add('show');
+                        }
+                    },
+                    'onReady': function(event) {
+                        // Mostrar botón después de 5 segundos por si no quieren ver todo el video
+                        setTimeout(function() {
+                            document.getElementById('revealBtn').classList.add('show');
+                        }, 5000);
+                    }
+                }
+            });
+        }
 
-    </div>
+        // Mostrar sobre
+        function showEnvelope() {
+            document.getElementById('videoSection').style.display = 'none';
+            var envSection = document.getElementById('envelopeSection');
+            envSection.classList.add('active');
 
+            // Abrir sobre después de 0.8s
+            setTimeout(function() {
+                document.getElementById('envelope').classList.add('open');
+            }, 800);
+
+            // Mostrar invitación + confeti después de 3.5s
+            setTimeout(function() {
+                envSection.style.display = 'none';
+                document.getElementById('invitationSection').classList.add('active');
+                launchConfetti();
+            }, 3500);
+        }
+
+        // Confeti
+        function launchConfetti() {
+            var container = document.getElementById('confetti');
+            container.classList.add('active');
+            var colors = ['#FFB7C5', '#A2D5F2', '#FFE699', '#FF8EA3', '#78BBE6', '#E85A71', '#457B9D'];
+
+            for (var i = 0; i < 60; i++) {
+                var div = document.createElement('div');
+                div.className = 'confetti';
+                div.style.left = Math.random() * 100 + '%';
+                div.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                div.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+                div.style.width = (Math.random() * 10 + 5) + 'px';
+                div.style.height = (Math.random() * 10 + 5) + 'px';
+                div.style.animationDelay = Math.random() * 2 + 's';
+                div.style.animationDuration = (Math.random() * 2 + 2) + 's';
+                container.appendChild(div);
+            }
+
+            setTimeout(function() { container.classList.remove('active'); }, 5000);
+        }
+    </script>
 </body>
 </html>
